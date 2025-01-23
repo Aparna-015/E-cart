@@ -250,13 +250,11 @@ const data =   [
 const Home = () => {
   return (
   
-
-  
 <div className="container bg-white flex flex-wrap justify-center w-full  	">
 
 {data.map((item)=>(
     
-    <Products  key={item.id} props={item}/>
+    <Products  products={item}/>
 
 
     ))}
