@@ -1,13 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Productdetails = () => {
-
-    const[productdata,setProductdata]=useState([])
-
-
-
-
+  const [productdata, setProductdata] = useState([]);
 
   const data = [
     {
@@ -279,47 +274,57 @@ const Productdetails = () => {
   ];
 
   const { id } = useParams();
-  console.log(id);
+  console.log(id,"id");
 
-useEffect(()=>{
+  useEffect(() => {
     if (id) {
-        const product = data.find((item) => item.id == id);
-        setProductdata(product)
-    
-    
-        // const product = data.includes(id);
-        console.log(product, "product");
-      } else {
-        alert("not found");
-      }
+      const product = data.find((item) => item.id == id);
+      setProductdata(product);
 
-},[id])
+      // const product = data.includes(id);
+      // console.log(product, "product");
+    } else {
+      alert("not found");
+    }
+  }, [id]);
 
+  const navigate=useNavigate()
 
- 
+  const handleCartitems=(c_id)=>{
+     console.log(c_id,"id");
+
+     navigate(`/cart/${id}`)
+
+  }
+
 
   return (
-    <div className="bg-red-500">
-
-        {
-productdata? (
-    
-    <div>   
-    <h1>{productdata?.title}</h1>
-    
-    </div>
-
-):(
-
-    <div>
-    <h1>Product not found</h1>
-     </div>
-
-)
-
-
-        }
-    
+    <div className=" w-full bg-gray-300 flex justify-center items-center min-h-screen  ">
+      {productdata ? (
+        <div className=" bg-white w-1/2 flex  justify-center items-center p-8 m-10 rounded-lg">
+         
+            <img
+              className="m-4 rounded-lg p-4"
+              src={productdata?.image}
+              alt=""
+              width="
+              250px"
+            />
+             <div className="w-1/3 flex flex-col"> 
+            <h1 className="font-bold  mb-4">{productdata?.title}</h1>
+            <h1>{productdata?.description}</h1>
+            <h1 className="mt-2 font-medium">{productdata?.category}</h1> <br />
+            <h1 className="font-bold">{productdata?.price}</h1>
+            <button onClick={()=>handleCartitems(id)} className="bg-blue-700 w-28 text-white text-center p-2 rounded-lg mt-8">
+              Add to cart
+            </button>
+         </div> 
+        </div>
+      ) : (
+        <div>
+          <h1>Product not found</h1>
+        </div>
+      )}
     </div>
   );
 };
